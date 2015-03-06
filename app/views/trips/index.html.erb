@@ -1,0 +1,44 @@
+<h1>I AM THE TRIP MASTER</h1>
+
+<div id="body-container">
+
+  <% i = 1 %>
+  <%@num_days.times do %>
+    <div id="single-day" class="day<%=i%>">
+      <form>
+        <label>Today Is Where?:</label>
+        <input type="text" class="input" name="location" placeholder="city or address">
+        <input type="submit" value="generate!" class="search day<%=i%>">
+      </form>
+      <div id="output<%=i%>" class="content"></div>
+    </div>
+
+  <script type="text/javascript">
+    var getDay = function(event){
+      event.preventDefault();
+      $('#output<%=i%>').children().remove()
+      var destination = $(".day<%=i%> .input").val();
+
+      $.ajax({
+        url:  "/trips",
+        type: "GET",
+        dataType: "json",
+        data: {location: destination}
+      }).done(function(data){
+        results = data.results
+        $('<p>').text(results[1]["name"]).appendTo($('#output<%=i%>'))
+        $('<p>').text(results[2]["name"]).appendTo($('#output<%=i%>'))
+        $('<p>').text(results[3]["name"]).appendTo($('#output<%=i%>'))
+        $('<p>').text(results[4]["name"]).appendTo($('#output<%=i%>'))
+        $('<p>').text(results[5]["name"]).appendTo($('#output<%=i%>'))
+      })
+    };
+    $('.search.day<%=i%>').on("click", getDay)
+  </script>
+
+    <% i=i+1 %>
+  <% end %>
+
+</div>
+
+

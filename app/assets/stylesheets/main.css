@@ -1,0 +1,26 @@
+body{
+  /*display: inline-block;*/
+  background-color: cadetblue;
+}
+
+#single-day{
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+}
+
+.content{
+  background-color: sandybrown;
+  border: 5px solid gray;
+  margin-top: 5px;
+  border-radius: 10px 10px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#body-container{
+  display: inline-block;
+  text-align: center;
+}
