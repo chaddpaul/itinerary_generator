@@ -1,21 +1,20 @@
 <h1>LETS GENERATE</h1>
 
-<div id="body-container">
+<div id="home-content">
   <form action="/trips">
     <label>Enter Trip Length(in days):</label>
     <input type="text" name= "numOfDays">
     <br>
     <br>
     <label>What Kind Of Trip Is It:</label>
-    <input list="trip">
-      <datalist id="trip">
-        <option value="Leisure">
-        <option value="Buisness">
-        <option value="Exploreration">
-        <option value="Family">
-      </datalist>
-      <br>
-      <br>
+    <select name="trip_type">
+      <option value="1">Lesiure</option>
+      <option value="2">Business</option>
+      <option value="3">Exploration</option>
+      <option value="4">Family</option>
+    </select>
+    <br>
+    <br>
     <input type="submit" value="Start Trippin'">
   </form>
 </div>

@@ -2,43 +2,45 @@
 
 <div id="body-container">
 
-  <% i = 1 %>
-  <%@num_days.times do %>
-    <div id="single-day" class="day<%=i%>">
+  <% @num_days.times do |i| %>
+    <div class="single-day day<%=i%>">
       <form>
         <label>Today Is Where?:</label>
         <input type="text" class="input" name="location" placeholder="city or address">
-        <input type="submit" value="generate!" class="search day<%=i%>">
+        <input type="submit" value="generate!" data-day-num="<%= i %>" class="search day<%=i%>">
       </form>
       <div id="output<%=i%>" class="content"></div>
     </div>
-
-  <script type="text/javascript">
-    var getDay = function(event){
-      event.preventDefault();
-      $('#output<%=i%>').children().remove()
-      var destination = $(".day<%=i%> .input").val();
-
-      $.ajax({
-        url:  "/trips",
-        type: "GET",
-        dataType: "json",
-        data: {location: destination}
-      }).done(function(data){
-        results = data.results
-        $('<p>').text(results[1]["name"]).appendTo($('#output<%=i%>'))
-        $('<p>').text(results[2]["name"]).appendTo($('#output<%=i%>'))
-        $('<p>').text(results[3]["name"]).appendTo($('#output<%=i%>'))
-        $('<p>').text(results[4]["name"]).appendTo($('#output<%=i%>'))
-        $('<p>').text(results[5]["name"]).appendTo($('#output<%=i%>'))
-      })
-    };
-    $('.search.day<%=i%>').on("click", getDay)
-  </script>
-
-    <% i=i+1 %>
   <% end %>
 
 </div>
 
+<script type="text/javascript">
+  $('body').width(50+(330*$('.single-day').length))
+
+  var getDay = function(event){
+    event.preventDefault();
+    var dayNum = $(event.target).data().dayNum;
+    $('#output' + dayNum).html('');
+    var destination = $(".day" + dayNum + " .input").val();
+
+    $.ajax({
+      url:  "/trips",
+      type: "GET",
+      dataType: "json",
+      data: {location: destination, trip_type: "<%= @trip_type %>"}
+    }).done(function(data){
+      results = data.results
+      // maybe use some templating?
+      // handle zero results better
+      $('<p>').text(results[1]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').text(results[2]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').text(results[3]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').text(results[4]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').text(results[5]["name"]).appendTo($('#output' + dayNum));
+    })
+  };
+
+  $('.search').on("click", getDay)
+</script>
 
