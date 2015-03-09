@@ -1,22 +1,28 @@
 <h1>I AM THE TRIP MASTER</h1>
 
 <div id="body-container">
+  <div id='inner-body-container'>
 
-  <% @num_days.times do |i| %>
-    <div class="single-day day<%=i%>">
-      <form>
-        <label>Today Is Where?:</label>
-        <input type="text" class="input" name="location" placeholder="city or address">
-        <input type="submit" value="generate!" data-day-num="<%= i %>" class="search day<%=i%>">
-      </form>
-      <div id="output<%=i%>" class="content"></div>
-    </div>
-  <% end %>
+    <% @num_days.times do |i| %>
+      <div class="single-day day<%=i%>">
+        <form>
+          <label>Today Is Where?:</label>
+          <input type="text" class="input" name="location" placeholder="city or address">
+          <input type="submit" value="generate!" data-day-num="<%= i %>" class="search day<%=i%>">
+        </form>
+        <div id="output<%=i%>" class="content"></div>
+      </div>
+    <% end %>
 
+  </div>
 </div>
 
 <script type="text/javascript">
-  $('body').width(50+(330*$('.single-day').length))
+
+  var get_photo_url = function(ref){
+      var reference = ref;
+      return "https://maps.googleapis.com/maps/api/place/photo?maxheight=300&maxwidth=300&photoreference="+reference+"&key=<%=ENV["GOOGLESERVERAPIKEY"]%>";
+  }
 
   var getDay = function(event){
     event.preventDefault();
@@ -33,14 +39,29 @@
       results = data.results
       // maybe use some templating?
       // handle zero results better
-      $('<p>').text(results[1]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').text(results[2]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').text(results[3]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').text(results[4]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').text(results[5]["name"]).appendTo($('#output' + dayNum));
+      shuffled_results = _.shuffle(results)
+
+      $('<p>').text(shuffled_results[1]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').addClass("address").text(shuffled_results[1]["vicinity"]).appendTo($('#output' + dayNum));
+      $('<img>').attr("src",get_photo_url(shuffled_results[1]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+
+      $('<p>').text(shuffled_results[2]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').addClass("address").text(shuffled_results[2]["vicinity"]).appendTo($('#output' + dayNum));
+      $('<img>').attr("src",get_photo_url(shuffled_results[2]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+
+      $('<p>').text(shuffled_results[3]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').addClass("address").text(shuffled_results[3]["vicinity"]).appendTo($('#output' + dayNum));
+      $('<img>').attr("src",get_photo_url(shuffled_results[3]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+
+      $('<p>').text(shuffled_results[4]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').addClass("address").text(shuffled_results[4]["vicinity"]).appendTo($('#output' + dayNum));
+      $('<img>').attr("src",get_photo_url(shuffled_results[4]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+
+      $('<p>').text(shuffled_results[5]["name"]).appendTo($('#output' + dayNum));
+      $('<p>').addClass("address").text(shuffled_results[5]["vicinity"]).appendTo($('#output' + dayNum));
+      $('<img>').attr("src",get_photo_url(shuffled_results[5]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
     })
   };
-
   $('.search').on("click", getDay)
-</script>
 
+</script>
