@@ -18,6 +18,8 @@
 </div>
 
 <script type="text/javascript">
+  $dayTemplate = $('#day-template');
+  renderDayTemplate = _.template($dayTemplate.html());
 
   var get_photo_url = function(ref){
       var reference = ref;
@@ -41,27 +43,39 @@
       // handle zero results better
       shuffled_results = _.shuffle(results)
 
-      $('<p>').text(shuffled_results[1]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').addClass("address").text(shuffled_results[1]["vicinity"]).appendTo($('#output' + dayNum));
-      $('<img>').attr("src",get_photo_url(shuffled_results[1]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+      for(var i=0; i<5;i++) {
+        $('<p>').text(shuffled_results[i]["name"]).appendTo($('#output' + dayNum));
+        $('<p>').addClass("address").text(shuffled_results[i]["vicinity"]).appendTo($('#output' + dayNum));
+        if(shuffled_results[i]["photos"]) {
+          $('<img>').attr("src",get_photo_url(shuffled_results[i]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+        } else {
+          $('<img>').attr("src",shuffled_results[i]["icon"]).appendTo($('#output' + dayNum));
+        }
+      }
 
-      $('<p>').text(shuffled_results[2]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').addClass("address").text(shuffled_results[2]["vicinity"]).appendTo($('#output' + dayNum));
-      $('<img>').attr("src",get_photo_url(shuffled_results[2]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+      // $('<p>').text(shuffled_results[2]["name"]).appendTo($('#output' + dayNum));
+      // $('<p>').addClass("address").text(shuffled_results[2]["vicinity"]).appendTo($('#output' + dayNum));
+      // $('<img>').attr("src",get_photo_url(shuffled_results[2]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
 
-      $('<p>').text(shuffled_results[3]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').addClass("address").text(shuffled_results[3]["vicinity"]).appendTo($('#output' + dayNum));
-      $('<img>').attr("src",get_photo_url(shuffled_results[3]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+      // $('<p>').text(shuffled_results[3]["name"]).appendTo($('#output' + dayNum));
+      // $('<p>').addClass("address").text(shuffled_results[3]["vicinity"]).appendTo($('#output' + dayNum));
+      // $('<img>').attr("src",get_photo_url(shuffled_results[3]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
 
-      $('<p>').text(shuffled_results[4]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').addClass("address").text(shuffled_results[4]["vicinity"]).appendTo($('#output' + dayNum));
-      $('<img>').attr("src",get_photo_url(shuffled_results[4]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+      // $('<p>').text(shuffled_results[4]["name"]).appendTo($('#output' + dayNum));
+      // $('<p>').addClass("address").text(shuffled_results[4]["vicinity"]).appendTo($('#output' + dayNum));
+      // $('<img>').attr("src",get_photo_url(shuffled_results[4]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
 
-      $('<p>').text(shuffled_results[5]["name"]).appendTo($('#output' + dayNum));
-      $('<p>').addClass("address").text(shuffled_results[5]["vicinity"]).appendTo($('#output' + dayNum));
-      $('<img>').attr("src",get_photo_url(shuffled_results[5]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
+      // $('<p>').text(shuffled_results[5]["name"]).appendTo($('#output' + dayNum));
+      // $('<p>').addClass("address").text(shuffled_results[5]["vicinity"]).appendTo($('#output' + dayNum));
+      // $('<img>').attr("src",get_photo_url(shuffled_results[5]["photos"][0]["photo_reference"])).appendTo($('#output' + dayNum));
     })
   };
   $('.search').on("click", getDay)
 
+</script>
+
+<script id="day-template" type="text/template">
+      <p><%%= shuffled_results[5]["name"] %></p>
+      <p class='address'><%%= shuffled_results[5]["vicinity"] %></p>
+      <img src="<%%=get_photo_url(shuffled_results[5]["photos"][0]["photo_reference"])%>">
 </script>
