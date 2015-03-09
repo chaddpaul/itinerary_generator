@@ -23,13 +23,22 @@ h1 {
 }
 
 #body-container{
+  width: 100%;
   display: inline-block;
-  text-align: center;
-  min-width: 1152px;
+  overflow-x: auto;
 }
 
 #home-content{
   position: relative;
   text-align: center;
   top: 50px;
+}
+
+.address{
+  font-size: .70em;
+}
+
+#inner-body-container{
+  float: left;
+  margin-right: -999em;
 }
