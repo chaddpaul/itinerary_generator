@@ -5,23 +5,14 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+Welcome to the Itinerary Generator App. Its purpose is to provide the user with a randomely generated list of places based off the user selected location and what type of trip the user declares. The user can enter a number of days the trip will take and the type of trip as well as the location per day that the user plans on going to.
 
-* System dependencies
+The app was created as a single page application that uses rails as application frame. It uses the Google Places API as well as requires geocoder gem inorder to transform locations into longitudes and latitudes. The Google Places API requires a key in order to use it. Also the place input requires either a city, an adress, or a zip code as inputs; although, it also can accept famous monuments as inputs.
 
-* Configuration
+My app does not persist any permanent information so the use of a database is unnecessary.
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+bundle install geocoder gem.
+localize the google places api key.
 
 
 Please feel free to use a different markup language if you do not plan to run
